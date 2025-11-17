@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Login - Tension Track</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        * { font-family: 'Poppins', sans-serif; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-teal-50 to-blue-50 min-h-screen flex items-center justify-center p-4">
+
+    <div class="w-full max-w-md">
+        <!-- Logo Section -->
+        <div class="text-center mb-6">
+            <!-- Institution Logos - ALWAYS SIDE BY SIDE -->
+            <div class="flex items-center justify-center gap-4 sm:gap-6 mb-6">
+                <!-- PPN Logo -->
+                <div class="transition-transform hover:scale-105">
+                    <img src="{{ asset('images/ppn-logo.png') }}"
+                         alt="PPN Logo"
+                         class="h-16 w-auto sm:h-20 md:h-24 object-contain">
+                </div>
+
+                <!-- UPI Logo -->
+                <div class="transition-transform hover:scale-105">
+                    <img src="{{ asset('images/upi-logo.png') }}"
+                         alt="UPI Logo"
+                         class="h-16 w-auto sm:h-20 md:h-24 object-contain">
+                </div>
+            </div>
+
+            <!-- App Logo & Title -->
+            <div class="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-teal-500 to-teal-600 rounded-2xl shadow-lg mb-3">
+                <i class="fas fa-heartbeat text-white text-2xl sm:text-3xl"></i>
+            </div>
+            <h1 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-1">Tension Track</h1>
+            <p class="text-teal-600 font-medium text-sm sm:text-base">Monitoring Hipertensi</p>
+            <p class="text-xs sm:text-sm text-gray-500 mt-1">PPN UPI - Indonesia University of Education</p>
+        </div>
+
+        <!-- Login Card -->
+        <div class="bg-white rounded-2xl shadow-xl p-6 sm:p-8">
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-800 mb-2">Login</h2>
+            <p class="text-gray-600 mb-6 text-sm sm:text-base">Masuk untuk melanjutkan</p>
+
+            @if($errors->any())
+                <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-6 rounded-r-lg">
+                    <p class="text-red-700 text-sm">{{ $errors->first() }}</p>
+                </div>
+            @endif
+
+            <form action="{{ route('login') }}" method="POST">
+                @csrf
+
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">EMAIL</label>
+                    <div class="relative">
+                        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                            <i class="fas fa-envelope"></i>
+                        </span>
+                        <input type="email" name="email" value="{{ old('email') }}" required
+                               class="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 focus:border-teal-500 focus:ring-2 focus:ring-teal-200 transition text-sm sm:text-base"
+                               placeholder="email@example.com">
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">PASSWORD</label>
+                    <div class="relative">
+                        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                        <input type="password" name="password" id="loginPassword" required
+                               class="w-full pl-10 pr-12 py-3 rounded-lg border border-gray-300 focus:border-teal-500 focus:ring-2 focus:ring-teal-200 transition text-sm sm:text-base"
+                               placeholder="******">
+                        <button type="button" onclick="togglePassword()" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                            <i class="fas fa-eye" id="eyeIcon"></i>
+                        </button>
+                    </div>
+                </div>
+
+
+                <div class="flex items-center justify-between mb-6">
+                    <label class="flex items-center">
+                        <input type="checkbox" name="remember" class="w-4 h-4 text-teal-600 border-gray-300 rounded focus:ring-teal-500">
+                        <span class="ml-2 text-sm text-gray-600">Ingat saya</span>
+                    </label>
+                <a href="{{ route('password.request') }}" class="text-sm text-teal-600 hover:text-teal-700 font-medium">
+                Lupa Password?
+                </a>
+                </div>
+
+                <button type="submit" class="w-full bg-gradient-to-r from-teal-500 to-teal-600 text-white py-3 rounded-lg font-semibold hover:from-teal-600 hover:to-teal-700 transition shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 text-sm sm:text-base">
+                    <i class="fas fa-sign-in-alt mr-2"></i>Login
+                </button>
+            </form>
+
+            <p class="text-center text-gray-600 mt-6 text-sm sm:text-base">
+                Belum punya akun?
+                <a href="{{ route('register') }}" class="text-teal-600 font-semibold hover:text-teal-700">Daftar sekarang</a>
+            </p>
+        </div>
+
+        <div class="text-center mt-6">
+            <p class="text-xs sm:text-sm text-gray-500">
+                © 2025 PPN UPI | Program Profesi Ners
+            </p>
+        </div>
+    </div>
+
+    <script>
+        function togglePassword() {
+            const input = document.getElementById('loginPassword');
+            const icon = document.getElementById('eyeIcon');
+
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+    </script>
+</body>
+</html>
