@@ -3,8 +3,6 @@
 namespace App\Notifications;
 
 use Illuminate\Auth\Notifications\VerifyEmail as VerifyEmailNotification;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\URL;
 
 class CustomVerifyEmailNotification extends VerifyEmailNotification
 {
@@ -28,15 +26,5 @@ class CustomVerifyEmailNotification extends VerifyEmailNotification
         ];
     }
 
-    protected function verificationUrl($notifiable)
-    {
-        return URL::temporarySignedRoute(
-            'verification.verify',
-            Carbon::now()->addMinutes(60),
-            [
-                'id' => $notifiable->getKey(),
-                'hash' => sha1($notifiable->getEmailForVerification()),
-            ]
-        );
-    }
+
 }
