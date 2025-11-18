@@ -18,11 +18,54 @@ class CustomVerifyEmailNotification extends VerifyEmailNotification
         return [
             'to'         => $notifiable->email,
             'subject'    => 'Verifikasi Email - Tension Track',
-            'body'       => "
-                <h2>Halo {$notifiable->name}!</h2>
-                <p>Silakan klik link berikut untuk verifikasi email:</p>
-                <a href='{$verificationUrl}'>Verifikasi Email</a>
-            ",
+            'body' => "
+    <div style='background-color:#f5f7fa; padding:30px; font-family:Arial, sans-serif;'>
+        <div style='max-width:600px; margin:0 auto; background:#ffffff; border-radius:10px; padding:30px; box-shadow:0 4px 12px rgba(0,0,0,0.08);'>
+
+            <h2 style='color:#2c7be5; margin-bottom:5px; text-align:center;'>Tension Track</h2>
+            <p style='color:#555; margin-top:0; text-align:center; font-size:14px;'>Monitoring Hipertensi</p>
+
+            <p style='color:#333;'>Halo {$notifiable->name},</p>
+
+            <p style='color:#444;'>
+                Terima kasih telah mendaftar di <strong>Tension Track</strong>.
+                Untuk mengaktifkan akun Anda dan mulai menggunakan fitur pendataan serta pemantauan hipertensi,
+                silakan lakukan verifikasi email terlebih dahulu.
+            </p>
+
+            <div style='text-align:center; margin:35px 0;'>
+                <a href='{$verificationUrl}'
+                   style='background:#2c7be5; padding:14px 28px; border-radius:8px; color:#fff; text-decoration:none; font-weight:bold; font-size:15px; display:inline-block;'>
+                    Verifikasi Email Anda
+                </a>
+            </div>
+
+            <p style='color:#444;'>
+                Jika tombol di atas tidak berfungsi, salin dan buka link berikut di browser Anda:
+            </p>
+
+            <div style='padding:12px; background:#f0f4ff; border-radius:8px; word-break:break-all; color:#2c7be5; font-size:14px;'>
+                {$verificationUrl}
+            </div>
+
+            <p style='color:#444;'>
+                Verifikasi email memastikan keamanan akun Anda dan membantu melindungi data dari akses yang tidak sah.
+                Kami senang Anda memilih Tension Track sebagai platform monitoring hipertensi.
+            </p>
+
+            <br>
+
+            <hr style='border:none; border-top:1px solid #e6e6e6; margin:30px 0;'>
+
+            <p style='font-size:12px; color:#777; text-align:center; line-height:1.5;'>
+                Tension Track – Monitoring Hipertensi<br>
+                PPN UPI – Indonesia University of Education<br>
+                © 2025 PPN UPI | Program Profesi Ners
+            </p>
+
+        </div>
+    </div>
+",
         ];
     }
 
