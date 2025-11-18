@@ -17,6 +17,9 @@ return [
     'postmark' => [
         'token' => env('POSTMARK_TOKEN'),
     ],
+    'brevo' => [
+    'key' => env('BREVO_API_KEY'),
+],
 
     'resend' => [
         'key' => env('RESEND_KEY'),

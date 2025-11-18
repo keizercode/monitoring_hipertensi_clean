@@ -3,24 +3,29 @@
 namespace App\Notifications;
 
 use Illuminate\Auth\Notifications\VerifyEmail as VerifyEmailNotification;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\URL;
 
 class CustomVerifyEmailNotification extends VerifyEmailNotification
 {
-    public function toMail($notifiable)
+    public function via($notifiable)
+    {
+        return [\App\Notifications\Channels\BrevoChannel::class];
+    }
+
+    public function toBrevo($notifiable)
     {
         $verificationUrl = $this->verificationUrl($notifiable);
 
-        return (new MailMessage)
-            ->subject('Verifikasi Email - Tension Track')
-            ->greeting('Halo ' . $notifiable->name . '!')
-            ->line('Selamat datang di Tension Track - Sistem Monitoring Hipertensi.')
-            ->line('Silakan klik tombol di bawah untuk memverifikasi email Anda.')
-            ->action('Verifikasi Email', $verificationUrl)
-            ->line('Jika Anda tidak membuat akun, tidak ada tindakan lebih lanjut yang diperlukan.')
-            ->salutation('Salam, Tim Tension Track');
+        return [
+            'to'         => $notifiable->email,
+            'subject'    => 'Verifikasi Email - Tension Track',
+            'body'       => "
+                <h2>Halo {$notifiable->name}!</h2>
+                <p>Silakan klik link berikut untuk verifikasi email:</p>
+                <a href='{$verificationUrl}'>Verifikasi Email</a>
+            ",
+        ];
     }
 
     protected function verificationUrl($notifiable)
