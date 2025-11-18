@@ -93,3 +93,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/patients/{patient}/reminders/{reminder}', [MedicationReminderController::class, 'destroy'])->name('reminders.destroy');
     Route::post('/patients/{patient}/reminders/{reminder}/toggle', [MedicationReminderController::class, 'toggle'])->name('reminders.toggle');
 });
+
+Route::fallback(function () {
+    return response()->view('errors.404', [], 404);
+});
