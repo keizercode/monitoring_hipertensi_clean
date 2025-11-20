@@ -1,3 +1,5 @@
+@props(['title', 'code', 'message', 'description', 'illustration'])
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
